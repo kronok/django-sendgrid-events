@@ -6,6 +6,7 @@ from django.db import models
 from django.utils import timezone
 from django.conf import settings
 from django.contrib.auth import get_user_model
+from pytz import AmbiguousTimeError
 
 from sendgrid_events.signals import batch_processed
 from drip.models import Drip
@@ -42,12 +43,17 @@ class Event(models.Model):
                     drip=drip,
                     data=event,
                     created_at=timezone.datetime.fromtimestamp(event["timestamp"])
+                    #created_at=timezone.get_current_timezone().localize(timezone.datetime.fromtimestamp(event["timestamp"]), is_dst=False)
+
                 ))
             except User.DoesNotExist:
                 msg = 'User email %s not found' % (event["email"])
                 logger.error(msg)
             except Drip.DoesNotExist:
                 msg = 'Drip %s not found' % (str(drip_pk))
+                logger.error(msg)
+            except AmbiguousTimeError:
+                msg = 'Bad time found. Possible daylight savings time problem.'
                 logger.error(msg)
         if events:
             batch_processed.send(sender=Event, events=events)
