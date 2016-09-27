@@ -23,6 +23,7 @@ class Event(models.Model):
 
     class Meta:
         get_latest_by = "created_at"
+        app_label = "sendgrid_events"
 
     @classmethod
     def process_batch(cls, data):
