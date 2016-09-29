@@ -8,7 +8,7 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from pytz import AmbiguousTimeError
 
-from sendgrid_events.signals import batch_processed
+from .signals import batch_processed
 from drip.models import Drip
 
 logger = logging.getLogger(__name__)

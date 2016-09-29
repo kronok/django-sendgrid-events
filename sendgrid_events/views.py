@@ -5,8 +5,8 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 from django.conf import settings
 
-from sendgrid_events.models import Event
-from sendgrid_events.tasks import event_process_batch_task
+from .models import Event
+from .tasks import event_process_batch_task
 
 
 @require_POST

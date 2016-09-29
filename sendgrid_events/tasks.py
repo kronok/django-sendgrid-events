@@ -1,6 +1,6 @@
 from celery import task
 
-from sendgrid_events.models import Event
+from .models import Event
 
 
 @task()
