@@ -1,7 +1,6 @@
 import json
 import logging
-from jsonfield import JSONField
-
+from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.utils import timezone
 from django.conf import settings
