@@ -11,7 +11,8 @@ from .tasks import event_process_batch_task
 @csrf_exempt
 def handle_batch_post(request):
     if getattr(settings, 'SENDGRIDEVENTS_USE_CELERY', False):
-        event_process_batch_task.delay(request.body)
+        event_process_batch_task.delay(request.json().body)
     else:
-        Event.process_batch(data=request.body)
+        assert False, request.json()
+        Event.process_batch(data=request.json().body)
     return HttpResponse()

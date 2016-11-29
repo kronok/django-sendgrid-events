@@ -28,7 +28,6 @@ class Event(models.Model):
     def process_batch(cls, data):
         User = get_user_model()
         events = []
-        assert False, data
         for event in json.loads(data).decode('utf-8'):
             try:
                 drip_pk = event.get("drip_pk", None)
