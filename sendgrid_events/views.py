@@ -10,7 +10,7 @@ from .tasks import event_process_batch_task
 @require_POST
 @csrf_exempt
 def handle_batch_post(request):
-    if settings.SENDGRIDEVENTS_USE_CELERY:
+    if getattr(settings, 'SENDGRIDEVENTS_USE_CELERY', False):
         event_process_batch_task.delay(request.body)
     else:
         Event.process_batch(data=request.body)
